@@ -1,0 +1,42 @@
+# Default configuration for Graph Bayesian Optimization experiments
+# This file contains all configurable parameters for running BO experiments
+
+# Experiment settings
+datasets:
+  - facebook
+  - enron
+algorithms:
+  - random_search
+  - bfs
+  - sparse_grf
+
+# Bayesian Optimization parameters
+bo_parameters:
+  iterations: 10
+  runs: 3
+  initial_points: 100
+  batch_size: 50
+  seeds: [100, 110, 120]  # Will be auto-generated if not provided
+
+# Graph Random Features (GRF) kernel parameters
+grf_parameters:
+  walks_per_node: 1000
+  p_halt: 0.1
+  max_walk_length: 3
+
+# Training parameters
+training_parameters:
+  learning_rate: 0.01
+  train_epochs: 30
+  gp_retrain_interval: 300
+
+# Directory paths (relative to project root)
+directories:
+  step_matrices: "graph_bo/data/step_matrices"
+  results: "graph_bo/results"
+
+# Random seeds
+random_seeds:
+  numpy_seed: 42
+  torch_seed: 42
+  random_walk_seed: 42

@@ -5,6 +5,7 @@ venv
 *.csv
 *.gz
 *.npz
+*.nc
 .DS_Store
 pems-bay.h5
 PKG-INFO
