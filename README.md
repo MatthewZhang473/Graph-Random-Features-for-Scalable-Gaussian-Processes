@@ -1,70 +1,42 @@
-# Efficient Gaussian Processes on Graphs (GRFs)
+# Graph Random Features for Scalable Gaussian Processes
 
-Reference implementation for the paper *Graph Random Features for Scalable Gaussian Processes*. The repo contains the dense (`efficient_graph_gp`) and sparse (`efficient_graph_gp_sparse`) Graph Random Features (GRF) kernels, plus the experiment scripts used in the paper.
+This repository contains the official implementation and experiment suite for the paper **"Graph Random Features for Scalable Gaussian Processes"** ([arXiv:2509.03691](https://arxiv.org/abs/2509.03691)). 
 
-## Install
 
-All dependencies (core + experiments) are pinned in `requirements.txt`:
-```bash
-pip install -r requirements.txt
-```
 
-## Quickstart
+## Abstract
 
-Dense GRF kernel on a toy graph:
-```python
-import numpy as np
-from efficient_graph_gp.graph_kernels.fast_grf_kernel_general import fast_general_grf_kernel
+We study the application of graph random features (GRFs) - a recently introduced stochastic estimator of graph node kernels - to scalable Gaussian processes on discrete input spaces. We prove that (under mild assumptions) Bayesian inference with GRFs enjoys O(N3/2) time complexity with respect to the number of nodes N, compared to O(N3) for exact kernels. Substantial wall-clock speedups and memory savings unlock Bayesian optimisation on graphs with over 106 nodes on a single computer chip, whilst preserving competitive performance.
 
-adj = np.array([[0,1,1,0],
-                [1,0,0,1],
-                [1,0,0,1],
-                [0,1,1,0]], dtype=float)
-modulator = [1.0, 0.5, 0.25]  # f_l terms
-K = fast_general_grf_kernel(adj_matrix=adj,
-                            modulator_vector=modulator,
-                            walks_per_node=50,
-                            p_halt=0.1,
-                            max_walk_length=len(modulator))
-print(K.shape)  # (4, 4)
-```
 
-Sparse GRF kernel (CSR adjacency, suitable for CG-based inference):
-```python
-import numpy as np
-import scipy.sparse as sp
-from efficient_graph_gp_sparse.graph_kernels_sparse.fast_grf_kernel_general import fast_general_grf_kernel
+## Core Implementation
 
-rows, cols = zip(*[(0,1),(1,0),(1,2),(2,1),(2,3),(3,2),(3,0),(0,3)])
-adj_csr = sp.csr_matrix((np.ones(len(rows)), (rows, cols)), shape=(4,4))
-modulator = [1.0, 0.5, 0.25]
-K_sparse = fast_general_grf_kernel(adj_matrix=adj_csr,
-                                   modulator_vector=modulator,
-                                   walks_per_node=50,
-                                   p_halt=0.1,
-                                   max_walk_length=len(modulator))
-print(K_sparse.shape)  # (4, 4)
-```
+The machinery for the GRF-based Gaussian Processes is maintained in our core library:
 
-## Reproducibility notes
-- Core logic lives in `efficient_graph_gp/` (dense, GPflow-friendly) and `efficient_graph_gp_sparse/` (sparse, GPyTorch-friendly). These mirror the Graph Random Features constructions and complexity guarantees described in the paper.
-- Paper experiments are organized under `experiments/`:
-  - `dense/traffic_dataset`: San Jose traffic regression.
-  - `dense/cora`: Cora citation classification.
-  - `dense/ablation`: ablation of random-walk kernel construction.
-  - `sparse/scaling_exp`: scaling benchmarks (O(N^{3/2}) conjugate gradients).
-  - `sparse/scalable_bo`: Bayesian optimisation on synthetic/social/wind graphs (uses configs/results in this folder).
-  - `sparse/social_networks`: SNAP social graph assets for BO.
-- `graph_bo/` contains the BO scripts/configs used in the paper; see its README for details.
-- Large datasets are not bundled; use the data-loading scripts in those folders to fetch sources (PEMS traffic, SNAP social graphs, ERA5 wind, etc.).
-- Tests: run `pytest -q` for smoke coverage on the GRF kernels and samplers.
+> **[Fast-Graph-GP](https://github.com/MatthewZhang473/Fast-Graph-GP)**: A package for performing fast Gaussian Process (GP) inference on graphs. Internally, it uses Graph Random Features (GRFs) to compute a unbiased & sparse estimate of a family of well-known graph node kernels. It further uses path-wise conditioning to leverage the sparsity of the kernel approximation, enabling you to perform GP model train / inference in $\mathcal{O}(N^{3/2})$ time and $\mathcal{O}(N)$ space complexity.
 
-## Project structure (high level)
-- `efficient_graph_gp/`: dense GRF kernels, modulation functions, random-walk samplers.
-- `efficient_graph_gp_sparse/`: sparse GRF kernels, CSR samplers, sparse models/utilities.
-- `graph_bo/`: Bayesian optimisation scripts/configs on large graphs (as in the paper).
-- `experiments_dense/`, `experiments_sparse/`: notebooks and scripts for regression/classification and scaling studies.
-- `archive/`: historical experiments and scratch work.
+## Refactor Progress
+
+We are actively refactoring the code for every experiments to improve accessibility and reproducibility. The table below summarises what is already available and what is still in progress.
+
+| Area | Status | Resources |
+| --- | --- | --- |
+| GRF-GP inference engine | Complete | Core implementation is maintained in [Fast-Graph-GP](https://github.com/MatthewZhang473/Fast-Graph-GP) |
+| Regression: traffic speed prediction | Complete | [demo](experiments/regression/traffic_prediction/demo.ipynb), [experiment](experiments/regression/traffic_prediction/sweep.ipynb), [visualisation](experiments/regression/traffic_prediction/plot.ipynb) |
+| Regression: wind interpolation | Complete | [demo](experiments/regression/wind_interpolation/demo.ipynb), [experiment](experiments/regression/wind_interpolation/sweep.ipynb), [visualisation](experiments/regression/wind_interpolation/plot.ipynb) |
+| Bayesian optimisation: social networks | In progress | Experiment and visualisation pipelines are being migrated into the new structure |
+| Scaling experiments | Planned | Reproducible scripts/notebooks will be added here |
+| Ablation studies | Planned | Reproducible scripts/notebooks will be added here |
 
 ## Citation
-If you use this code, please cite the accompanying paper *Graph Random Features for Scalable Gaussian Processes* (preprint).
+
+If this repository or the accompanying paper is useful in your work, please cite:
+
+```bibtex
+@article{zhang2025graph,
+  title={Graph Random Features for Scalable Gaussian Processes},
+  author={Zhang, Matthew and Lin, Jihao Andreas and Choromanski, Krzysztof and Weller, Adrian and Turner, Richard E. and Reid, Isaac},
+  journal={arXiv preprint arXiv:2509.03691},
+  year={2025}
+}
+```
