@@ -3,9 +3,10 @@ venv
 *.pyc
 *.pkl
 *.csv
-*.gz
 *.npz
 *.nc
+*.zip
+*.gz
 .DS_Store
 pems-bay.h5
 PKG-INFO
