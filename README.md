@@ -24,10 +24,9 @@ We are actively refactoring the code for every experiments to improve accessibil
 | GRF-GP inference engine | Complete | Core implementation is maintained in [Fast-Graph-GP](https://github.com/MatthewZhang473/Fast-Graph-GP) |
 | Regression: traffic speed prediction | Complete | [demo](experiments/regression/traffic_prediction/demo.ipynb), [experiment](experiments/regression/traffic_prediction/sweep.ipynb), [visualisation](experiments/regression/traffic_prediction/plot.ipynb) |
 | Regression: wind interpolation | Complete | [demo](experiments/regression/wind_interpolation/demo.ipynb), [experiment](experiments/regression/wind_interpolation/sweep.ipynb), [visualisation](experiments/regression/wind_interpolation/plot.ipynb) |
-| Bayesian optimisation: synthetic graphs | In progress | |
-| Bayesian optimisation: social networks | In progress | |
-| Scaling experiments | Planned | |
-| Ablation studies | Planned | |
+| Bayesian optimisation: social networks | Complete | [demo](experiments/bayesopt/social_networks/demo.ipynb), [experiment](experiments/bayesopt/social_networks/sweep.ipynb), [visualization](experiments/bayesopt/social_networks/plot.ipynb)|
+| Scaling experiments | Completed | [experiment](experiments/scaling/scaling.py), [visualization](experiments/scaling/plot.ipynb) |
+| Ablation studies | Completed | [demo_1](experiments/ablation/2d_mesh.ipynb), [demo_2](experiments/ablation/synthetic_graph.ipynb) |
 
 ## Citation
 
