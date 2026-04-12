@@ -1,12 +1,12 @@
 # Graph Random Features for Scalable Gaussian Processes
 
-This repository contains the official implementation and experiment suite for the paper **"Graph Random Features for Scalable Gaussian Processes"** ([arXiv:2509.03691](https://arxiv.org/abs/2509.03691)). 
+This repository contains the official implementation and experiment suite for the ICLR26 paper **"Graph Random Features for Scalable Gaussian Processes"** ([arXiv:2509.03691](https://arxiv.org/abs/2509.03691)). You can find the ICLR virtual poster [here](https://iclr.cc/virtual/2026/poster/10011224).
 
 
 
 ## Abstract
 
-We study the application of graph random features (GRFs) - a recently introduced stochastic estimator of graph node kernels - to scalable Gaussian processes on discrete input spaces. We prove that (under mild assumptions) Bayesian inference with GRFs enjoys O(N3/2) time complexity with respect to the number of nodes N, compared to O(N3) for exact kernels. Substantial wall-clock speedups and memory savings unlock Bayesian optimisation on graphs with over 106 nodes on a single computer chip, whilst preserving competitive performance.
+We study the application of graph random features (GRFs) - a recently introduced stochastic estimator of graph node kernels - to scalable Gaussian processes on discrete input spaces. We prove that (under mild assumptions) Bayesian inference with GRFs enjoys $\mathcal{O}(N^{3/2})$ time complexity with respect to the number of nodes N, compared to $\mathcal{O}(N^3)$ for exact kernels. Substantial wall-clock speedups and memory savings unlock **Bayesian optimisation on graphs with over 1M nodes on a single computer chip**, whilst preserving competitive performance.
 
 
 ## Core Implementation
@@ -25,8 +25,8 @@ We are actively refactoring the code for every experiments to improve accessibil
 | Regression: traffic speed prediction | Complete | [demo](experiments/regression/traffic_prediction/demo.ipynb), [experiment](experiments/regression/traffic_prediction/sweep.ipynb), [visualisation](experiments/regression/traffic_prediction/plot.ipynb) |
 | Regression: wind interpolation | Complete | [demo](experiments/regression/wind_interpolation/demo.ipynb), [experiment](experiments/regression/wind_interpolation/sweep.ipynb), [visualisation](experiments/regression/wind_interpolation/plot.ipynb) |
 | Bayesian optimisation: social networks | Complete | [demo](experiments/bayesopt/social_networks/demo.ipynb), [experiment](experiments/bayesopt/social_networks/sweep.ipynb), [visualization](experiments/bayesopt/social_networks/plot.ipynb)|
-| Scaling experiments | Completed | [experiment](experiments/scaling/scaling.py), [visualization](experiments/scaling/plot.ipynb) |
-| Ablation studies | Completed | [demo_1](experiments/ablation/2d_mesh.ipynb), [demo_2](experiments/ablation/synthetic_graph.ipynb) |
+| Scaling experiments | Complete | [experiment](experiments/scaling/scaling.py), [visualization](experiments/scaling/plot.ipynb) |
+| Ablation studies | Complete | [demo_1](experiments/ablation/2d_mesh.ipynb), [demo_2](experiments/ablation/synthetic_graph.ipynb) |
 
 ## Citation
 
